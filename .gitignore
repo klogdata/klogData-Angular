@@ -40,3 +40,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Local secrets and generated runtime config
+.env
+public/web3forms-config.js
