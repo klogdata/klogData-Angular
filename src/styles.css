@@ -1,0 +1,590 @@
+@import './react-generated.css';
+
+:root {
+	--font-size: 16px;
+	--background: #ffffff;
+	--foreground: oklch(0.145 0 0);
+	--card: #ffffff;
+	--card-foreground: oklch(0.145 0 0);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.145 0 0);
+	--primary: #030213;
+	--primary-foreground: oklch(1 0 0);
+	--secondary: oklch(0.95 0.0058 264.53);
+	--secondary-foreground: #030213;
+	--muted: #ececf0;
+	--muted-foreground: #717182;
+	--accent: #e9ebef;
+	--accent-foreground: #030213;
+	--destructive: #d4183d;
+	--destructive-foreground: #ffffff;
+	--border: rgba(0, 0, 0, 0.1);
+	--input: transparent;
+	--input-background: #f3f3f5;
+	--switch-background: #cbced4;
+	--font-weight-medium: 500;
+	--font-weight-normal: 400;
+	--ring: oklch(0.708 0 0);
+	--chart-1: oklch(0.646 0.222 41.116);
+	--chart-2: oklch(0.6 0.118 184.704);
+	--chart-3: oklch(0.398 0.07 227.392);
+	--chart-4: oklch(0.828 0.189 84.429);
+	--chart-5: oklch(0.769 0.188 70.08);
+	--radius: 0.625rem;
+	--sidebar: oklch(0.985 0 0);
+	--sidebar-foreground: oklch(0.145 0 0);
+	--sidebar-primary: #030213;
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.97 0 0);
+	--sidebar-accent-foreground: oklch(0.205 0 0);
+	--sidebar-border: oklch(0.922 0 0);
+	--sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+	--card: oklch(0.145 0 0);
+	--card-foreground: oklch(0.985 0 0);
+	--popover: oklch(0.145 0 0);
+	--popover-foreground: oklch(0.985 0 0);
+	--primary: oklch(0.985 0 0);
+	--primary-foreground: oklch(0.205 0 0);
+	--secondary: oklch(0.269 0 0);
+	--secondary-foreground: oklch(0.985 0 0);
+	--muted: oklch(0.269 0 0);
+	--muted-foreground: oklch(0.708 0 0);
+	--accent: oklch(0.269 0 0);
+	--accent-foreground: oklch(0.985 0 0);
+	--destructive: oklch(0.396 0.141 25.723);
+	--destructive-foreground: oklch(0.637 0.237 25.331);
+	--border: oklch(0.269 0 0);
+	--input: oklch(0.269 0 0);
+	--ring: oklch(0.439 0 0);
+	--font-weight-medium: 500;
+	--font-weight-normal: 400;
+	--chart-1: oklch(0.488 0.243 264.376);
+	--chart-2: oklch(0.696 0.17 162.48);
+	--chart-3: oklch(0.769 0.188 70.08);
+	--chart-4: oklch(0.627 0.265 303.9);
+	--chart-5: oklch(0.645 0.246 16.439);
+	--sidebar: oklch(0.205 0 0);
+	--sidebar-foreground: oklch(0.985 0 0);
+	--sidebar-primary: oklch(0.488 0.243 264.376);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.269 0 0);
+	--sidebar-accent-foreground: oklch(0.985 0 0);
+	--sidebar-border: oklch(0.269 0 0);
+	--sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-input-background: var(--input-background);
+	--color-switch-background: var(--switch-background);
+	--color-ring: var(--ring);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		font-size: var(--font-size);
+	}
+
+	body {
+		margin: 0;
+		background: var(--background);
+		color: var(--foreground);
+		font-family: Inter, 'Segoe UI', sans-serif;
+	}
+
+	button,
+	input,
+	select,
+	textarea {
+		font: inherit;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+}
+
+.brand-wordmark {
+	color: #e5e7eb;
+	letter-spacing: -0.02em;
+}
+
+.brand-wordmark-accent {
+	color: #ff4f4f;
+}
+
+.platform-card-sheen {
+	position: relative;
+}
+
+.platform-card-sheen::before {
+	content: '';
+	position: absolute;
+	top: -24%;
+	bottom: -24%;
+	left: 0;
+	z-index: 10;
+	width: 42%;
+	pointer-events: none;
+	opacity: 0;
+	transform: translateX(-180%) rotate(14deg);
+	background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.32) 50%, transparent 100%);
+}
+
+.platform-card-sheen:hover::before {
+	opacity: 1;
+	transform: translateX(360%) rotate(14deg);
+	transition: transform 700ms ease-out, opacity 700ms ease-out;
+}
+
+.hero-reveal {
+	animation: heroReveal 0.8s ease-out both;
+}
+
+.hero-reveal-delay-1 {
+	animation-delay: 0.1s;
+}
+
+.hero-reveal-delay-2 {
+	animation-delay: 0.2s;
+}
+
+.hero-reveal-delay-3 {
+	animation-delay: 0.3s;
+}
+
+.hero-stream {
+	animation: heroStream var(--stream-duration, 4s) linear infinite;
+	animation-delay: var(--stream-delay, 0s);
+}
+
+.hero-particle {
+	animation: heroParticleFloat var(--particle-duration, 5s) ease-in-out infinite;
+	animation-delay: var(--particle-delay, 0s);
+	opacity: 0;
+}
+
+.fade-in {
+	animation: fadeIn 0.8s ease-out both;
+}
+
+.reveal-up,
+.reveal-left,
+.reveal-right,
+.reveal-scale {
+	opacity: 0;
+	transition-duration: 0.6s;
+	transition-property: opacity, transform, box-shadow;
+	transition-timing-function: ease-out;
+}
+
+.reveal-up {
+	transform: translateY(20px);
+}
+
+.reveal-left {
+	transform: translateX(-30px);
+}
+
+.reveal-right {
+	transform: translateX(30px);
+}
+
+.reveal-scale {
+	transform: translateY(16px) scale(0.95);
+}
+
+.reveal-visible {
+	opacity: 1;
+	transform: translate3d(0, 0, 0) scale(1);
+}
+
+.reveal-delay-1 {
+	transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+	transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+	transition-delay: 0.3s;
+}
+
+.motion-float {
+	animation: floatingParticle 5s ease-in-out infinite;
+}
+
+.stats-rocket-animate {
+	animation: statsRocketGlow 4s ease-in-out infinite, statsRocketSpin 10s linear infinite;
+}
+
+.stats-panel {
+	transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+@media (hover: hover) {
+	.stats-panel:hover {
+		box-shadow: 0 0 80px rgba(6, 182, 212, 0.2);
+	}
+}
+
+.service-icon-glyph {
+	transition: transform 0.5s ease;
+}
+
+@media (hover: hover) {
+	.group:hover .service-icon-glyph {
+		animation: serviceIconWiggle 0.5s ease;
+	}
+}
+
+.social-link {
+	transform: translateY(0) scale(1);
+}
+
+@media (hover: hover) {
+	.social-link:hover {
+		transform: translateY(-5px) scale(1.1);
+	}
+}
+
+.toast-enter {
+	animation: toastEnter 0.25s ease-out both;
+}
+
+.dialog-enter {
+	animation: dialogEnter 0.24s ease-out both;
+}
+
+.overlay-enter {
+	animation: fadeIn 0.2s ease-out both;
+}
+
+.panel-enter {
+	animation: panelEnter 0.24s ease-out both;
+}
+
+.deferred-section-shell {
+	contain-intrinsic-size: 1200px;
+	content-visibility: auto;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes heroReveal {
+	from {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes heroBlobDriftA {
+	0%,
+	100% {
+		opacity: 0.5;
+		transform: translate(-50%, -50%) scale(1) translate3d(0, 0, 0);
+	}
+
+	50% {
+		opacity: 0.8;
+		transform: translate(-50%, -50%) scale(1.4) translate3d(50px, 30px, 0);
+	}
+}
+
+@keyframes heroBlobDriftB {
+	0%,
+	100% {
+		opacity: 0.4;
+		transform: scale(1) translate3d(0, 0, 0);
+	}
+
+	50% {
+		opacity: 0.9;
+		transform: scale(1.5) translate3d(-40px, -40px, 0);
+	}
+}
+
+@keyframes heroStream {
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(200vw);
+	}
+}
+
+@keyframes heroParticleFloat {
+	0%,
+	100% {
+		opacity: 0;
+		transform: translate3d(0, 0, 0) scale(0);
+	}
+
+	50% {
+		opacity: 1;
+		transform: translate3d(var(--particle-x, 60px), -120px, 0) scale(2);
+	}
+}
+
+@keyframes floatingParticle {
+	0%,
+	100% {
+		opacity: 0.1;
+		transform: translateY(0) scale(1);
+	}
+
+	50% {
+		opacity: 0.8;
+		transform: translateY(-60px) scale(var(--float-scale, 1.35));
+	}
+}
+
+@keyframes statsRocketGlow {
+	0%,
+	100% {
+		box-shadow: 0 0 50px rgba(34, 211, 238, 0.4);
+	}
+
+	50% {
+		box-shadow: 0 0 65px rgba(99, 102, 241, 0.45);
+	}
+}
+
+@keyframes statsRocketSpin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes serviceIconWiggle {
+	0% {
+		transform: rotate(0deg) scale(1);
+	}
+
+	25% {
+		transform: rotate(-10deg) scale(1.05);
+	}
+
+	50% {
+		transform: rotate(10deg) scale(1.1);
+	}
+
+	75% {
+		transform: rotate(-10deg) scale(1.05);
+	}
+
+	100% {
+		transform: rotate(0deg) scale(1);
+	}
+}
+
+@keyframes toastEnter {
+	from {
+		opacity: 0;
+		transform: translateY(12px) scale(0.98);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes dialogEnter {
+	from {
+		opacity: 0;
+		transform: translateY(20px) scale(0.985);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes panelEnter {
+	from {
+		opacity: 0;
+		transform: translateY(24px) scale(0.985);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-reveal,
+	.hero-stream,
+	.hero-particle,
+	.fade-in,
+	.motion-float,
+	.stats-rocket-animate,
+	.toast-enter,
+	.dialog-enter,
+	.overlay-enter,
+	.panel-enter {
+		animation: none !important;
+	}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REVEAL ITEM — per-element scroll-triggered entrance system
+   Each element observes itself independently and animates in
+   with a unique motion tied to its role/type.
+   ═══════════════════════════════════════════════════════════ */
+
+.ri-item {
+	opacity: 0;
+	transition-property: opacity, transform, filter;
+	transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+	transition-duration: 0.75s;
+	transition-delay: var(--ri-delay, 0ms);
+}
+
+/* ── Starting states (hidden position before reveal) ── */
+
+/* Plain upward slide — body text, list items */
+.ri-item[data-ri='slide-up'] {
+	transform: translateY(36px);
+}
+
+/* Directional slides — left/right cards, split layouts */
+.ri-item[data-ri='slide-left'] {
+	transform: translateX(-44px);
+}
+.ri-item[data-ri='slide-right'] {
+	transform: translateX(44px);
+}
+
+/* Zoom from center — icons, stat numbers, logos */
+.ri-item[data-ri='zoom-in'] {
+	transform: scale(0.68) translateY(10px);
+}
+
+/* Soft 3D flip — card containers */
+.ri-item[data-ri='flip-x'] {
+	transform: perspective(700px) rotateX(15deg) translateY(30px);
+	transform-origin: top center;
+}
+
+/* Text blur reveal — section headings */
+.ri-item[data-ri='blur-in'] {
+	transform: translateY(20px);
+	filter: blur(12px);
+	transition-duration: 0.9s;
+}
+
+/* Elastic pop — buttons, badges, CTAs */
+.ri-item[data-ri='pop'] {
+	transform: scale(0.55);
+	transition-timing-function: cubic-bezier(0.34, 1.48, 0.64, 1);
+}
+
+/* Line draw — dividers, decorative spans */
+.ri-item[data-ri='draw'] {
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Diagonal glide — labels, accent text */
+.ri-item[data-ri='glide'] {
+	transform: translateY(-18px) translateX(14px) rotate(-2.5deg);
+}
+
+/* Fall from above — drop-in elements */
+.ri-item[data-ri='drop'] {
+	transform: translateY(-36px);
+}
+
+/* Gentle rise + subtle scale — panel containers */
+.ri-item[data-ri='rise-fade'] {
+	transform: translateY(50px) scale(0.97);
+	transition-duration: 0.9s;
+}
+
+/* ── Revealed / visible state — common to all variants ── */
+.ri-item.ri-visible {
+	opacity: 1;
+	transform: none;
+	filter: none;
+}
+
+/* Slightly snappier duration for the pop bounce */
+.ri-item[data-ri='pop'].ri-visible {
+	transition-duration: 0.55s;
+}
+
+/* ── Reduced-motion override ── */
+@media (prefers-reduced-motion: reduce) {
+	.ri-item {
+		transition: opacity 0.3s ease !important;
+		transform: none !important;
+		filter: none !important;
+	}
+}
