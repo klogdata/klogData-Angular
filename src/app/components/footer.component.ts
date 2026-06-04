@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { RevealItemDirective } from '../shared/reveal-item.directive';
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, signal } from '@angular/core';
-import { ChevronRight, Github, Linkedin, Lock, LucideAngularModule, LucideIconProvider, LUCIDE_ICONS, Mail, Phone, Users, X } from 'lucide-angular';
+import { ChevronRight, Github, Linkedin, Lock, LucideAngularModule, Mail, Phone, Users, X } from 'lucide-angular';
 import { scrollToSection, scrollToTop } from '../shared/navigation';
 
 const ICONS = { ChevronRight, Github, Linkedin, Lock, Mail, Phone, Users, X };
@@ -23,16 +22,9 @@ const SOCIALS = [
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, RevealItemDirective],
+  imports: [LucideAngularModule, RevealItemDirective],
   templateUrl: './footer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: LUCIDE_ICONS,
-      multi: true,
-      useValue: new LucideIconProvider({ ChevronRight, Github, Linkedin, Lock, Mail, Phone, Users, X }),
-    },
-  ],
 })
 export class FooterComponent {
   @ViewChild('footerRoot') private footerRef!: ElementRef<HTMLElement>;

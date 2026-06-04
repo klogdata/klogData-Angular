@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CircleAlert, CircleCheck, LucideAngularModule, LucideIconProvider, LUCIDE_ICONS, X } from 'lucide-angular';
+import { CircleAlert, CircleCheck, LucideAngularModule, X } from 'lucide-angular';
 import { ToastService } from '../shared/toast.service';
 
 const ICONS = { CircleAlert, CircleCheck, X };
@@ -8,8 +8,7 @@ const ICONS = { CircleAlert, CircleCheck, X };
 @Component({
   selector: 'app-toast-host',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
-  providers: [{ provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider({ CircleAlert, CircleCheck, X }) }],
+  imports: [NgClass, LucideAngularModule],
   template: `
     <div class="pointer-events-none fixed bottom-4 right-4 z-[220] flex w-[calc(100%-2rem)] max-w-sm flex-col gap-3 sm:w-full">
       @for (toast of toastService.toasts(); track toast.id) {

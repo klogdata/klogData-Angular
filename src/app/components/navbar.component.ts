@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, output, signal } from '@angular/core';
-import { LucideAngularModule, LucideIconProvider, LUCIDE_ICONS, Menu, X } from 'lucide-angular';
+import { LucideAngularModule, Menu, X } from 'lucide-angular';
 import { scrollToSection, scrollToTop } from '../shared/navigation';
 
 const ICONS = { Menu, X };
@@ -14,16 +14,14 @@ const NAV_LINKS = [
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [NgClass, LucideAngularModule],
   templateUrl: './navbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider({ Menu, X }) }],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   readonly consultationRequested = output<void>();
   protected readonly icons = ICONS;
   protected readonly navLinks = NAV_LINKS;
-  protected readonly consultationButtonClassName = 'inline-flex items-center justify-center rounded-full border border-cyan-400/30 bg-[linear-gradient(135deg,rgba(34,211,238,0.18),rgba(99,102,241,0.2)_55%,rgba(244,63,94,0.14))] px-5 py-2.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_10px_24px_rgba(8,47,73,0.3)] transition-all duration-300 hover:border-cyan-300/50 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_14px_30px_rgba(8,47,73,0.38)]';
   protected readonly logoSrc = '/assets/Klog_Data_Logo_only.png';
 
   protected readonly scrolled = signal(false);

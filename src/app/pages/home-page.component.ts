@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,7 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 import type { ConsultationDialogComponent } from '../components/consultation-dialog.component';
-import { ArrowRight, LucideAngularModule, LucideIconProvider, LUCIDE_ICONS } from 'lucide-angular';
+import { ArrowRight, LucideAngularModule } from 'lucide-angular';
 import { FooterComponent } from '../components/footer.component';
 import { HomeDeferredSectionsComponent } from '../components/home-deferred-sections.component';
 import { NavbarComponent } from '../components/navbar.component';
@@ -60,7 +59,6 @@ const HERO_PARTICLES = createParticleSpecs(12, 60, 1.8, {
   selector: 'app-home-page',
   standalone: true,
   imports: [
-    CommonModule,
     LucideAngularModule,
     NavbarComponent,
     ScrollProgressComponent,
@@ -71,7 +69,6 @@ const HERO_PARTICLES = createParticleSpecs(12, 60, 1.8, {
   ],
   templateUrl: './home-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider({ ArrowRight }) }],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   protected readonly icons = ICONS;

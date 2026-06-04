@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ChevronDown, LucideAngularModule, LucideIconProvider, LUCIDE_ICONS, X } from 'lucide-angular';
+import { ChevronDown, LucideAngularModule, X } from 'lucide-angular';
 import { ToastService } from '../shared/toast.service';
 
 const ICONS = { ChevronDown, X };
@@ -66,10 +64,9 @@ function getPhoneError(value: string) {
 @Component({
   selector: 'app-consultation-dialog',
   standalone: true,
-  imports: [CommonModule, FormsModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './consultation-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider({ ChevronDown, X }) }],
 })
 export class ConsultationDialogComponent implements OnInit, OnDestroy {
   readonly openChange = output<boolean>();

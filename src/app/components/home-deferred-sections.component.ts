@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import {
   BarChart,
@@ -13,8 +12,6 @@ import {
   ShieldCheck,
   Zap,
   LucideAngularModule,
-  LucideIconProvider,
-  LUCIDE_ICONS,
 } from 'lucide-angular';
 import { RevealItemDirective } from '../shared/reveal-item.directive';
 import { SectionActivityDirective } from '../shared/section-activity.directive';
@@ -90,28 +87,9 @@ const SERVICE_CARDS = [
 @Component({
   selector: 'app-home-deferred-sections',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, SectionActivityDirective, RevealItemDirective],
+  imports: [LucideAngularModule, SectionActivityDirective, RevealItemDirective],
   templateUrl: './home-deferred-sections.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: LUCIDE_ICONS,
-      multi: true,
-      useValue: new LucideIconProvider({
-        BarChart,
-        Building2,
-        Calculator,
-        CheckCircle2,
-        Cpu,
-        Database,
-        LayoutDashboard,
-        Network,
-        Rocket,
-        ShieldCheck,
-        Zap,
-      }),
-    },
-  ],
 })
 export class HomeDeferredSectionsComponent {
   readonly consultationRequested = output<void>();

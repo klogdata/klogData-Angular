@@ -1,75 +1,103 @@
-<div class="min-h-screen bg-slate-950 text-slate-50 selection:bg-cyan-500/30 font-sans flex flex-col">
+<div class="page-root">
   <app-navbar (consultationRequested)="openConsultation()"></app-navbar>
 
-  <main class="relative z-10 flex-1">
-    <div class="bg-slate-950 text-white min-h-screen">
-      <app-scroll-progress></app-scroll-progress>
+  <main class="page-main">
+    <app-scroll-progress></app-scroll-progress>
 
-      <section appSectionActivity #heroSection="sectionActivity" class="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-slate-950">
-        <div class="absolute inset-0 z-0">
-          <div class="absolute inset-0 z-10 bg-gradient-to-b from-slate-950/20 via-slate-950/60 to-slate-950"></div>
+    <section appSectionActivity #heroSection="sectionActivity" class="hero-section">
+      <div class="hero-bg">
+        <div class="hero-bg__gradient"></div>
 
-          <div class="absolute left-1/4 top-1/4 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full mix-blend-screen" [ngClass]="isSmallScreen() ? 'w-[58vw] h-[58vw] bg-cyan-500/30 blur-[90px]' : 'w-[50vw] h-[50vw] bg-cyan-500/40 blur-[130px]'" [style.animationDuration]="'15s'" [style.animationName]="'heroBlobDriftA'" [style.animationPlayState]="decorativeEffectsReady() && heroSection.isNear() ? 'running' : 'paused'"></div>
-          <div class="absolute bottom-1/4 right-1/4 z-0 rounded-full mix-blend-screen" [ngClass]="isSmallScreen() ? 'w-[52vw] h-[52vw] bg-indigo-500/28 blur-[82px]' : 'w-[40vw] h-[40vw] bg-indigo-500/40 blur-[120px]'" [style.animationDelay]="'2s'" [style.animationDuration]="'12s'" [style.animationName]="'heroBlobDriftB'" [style.animationPlayState]="decorativeEffectsReady() && heroSection.isNear() ? 'running' : 'paused'"></div>
-          <div class="absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full mix-blend-screen" [ngClass]="isSmallScreen() ? 'w-[74vw] h-[42vw] bg-purple-500/22 blur-[92px]' : 'w-[60vw] h-[30vw] bg-purple-500/30 blur-[140px]'">
-          </div>
-
-          @if (decorativeEffectsReady() && heroSection.isNear()) {
-            @for (streamIndex of heroStreamIndexes(); track streamIndex) {
-              <div class="hero-stream absolute left-[-50%] z-0 h-[2px] w-1/4 bg-gradient-to-r from-transparent to-transparent" [ngClass]="streamIndex % 2 === 0 ? 'via-cyan-400 shadow-[0_0_15px_#22d3ee]' : 'via-indigo-500 shadow-[0_0_15px_#6366f1]'" [style.--stream-delay]="((streamIndex * 0.7) % 5) + 's'" [style.--stream-duration]="(3 + (streamIndex % 5)) + 's'" [style.opacity]="0.3 + (streamIndex % 3) * 0.2" [style.top.%]="5 + (streamIndex * 17) % 90"></div>
-            }
-          }
-
-          <div class="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden h-[120vw] w-[120vw] -translate-x-1/2 -translate-y-1/2 items-center justify-center md:flex md:h-[80vw] md:w-[80vw]">
-            @if (!isSmallScreen()) {
-              <div class="absolute h-1/2 w-1/2 origin-bottom-right rounded-tl-full border-l-2 border-t-2 border-cyan-400/40 bg-gradient-to-br from-cyan-500/10 to-transparent blur-[1px]" style="bottom: 50%; right: 50%"></div>
-            }
-
-            @for (ring of heroRings(); track ring) {
-              <div class="absolute rounded-full" [ngClass]="isSmallScreen() ? 'border border-cyan-500/20' : 'border-[1.5px] border-cyan-500/30 mix-blend-screen shadow-[0_0_20px_rgba(6,182,212,0.2)_inset,0_0_20px_rgba(6,182,212,0.2)]'" [style.width.%]="ring * 20" [style.height.%]="ring * 20" [style.opacity]="isSmallScreen() ? 0.3 : 0.45"></div>
-            }
-          </div>
-
-          @if (decorativeEffectsReady() && heroSection.isNear()) {
-            @for (particle of heroParticles(); track $index) {
-              <div class="hero-particle absolute z-0 h-1.5 w-1.5 rounded-full" [ngClass]="$index % 3 !== 0 ? 'bg-cyan-400 shadow-[0_0_10px_#22d3ee]' : 'bg-indigo-400 shadow-[0_0_10px_#818cf8]'" [style.--particle-delay]="particle.delay + 's'" [style.--particle-duration]="(particle.duration + 2) + 's'" [style.--particle-x]="particle.x + 'px'" [style.left.%]="particle.left" [style.top.%]="particle.top"></div>
-            }
-          }
+        <div class="hero-blob hero-blob--a" [class.is-small]="isSmallScreen()"
+          [style.animationDuration]="'15s'" [style.animationName]="'heroBlobDriftA'"
+          [style.animationPlayState]="decorativeEffectsReady() && heroSection.isNear() ? 'running' : 'paused'">
         </div>
+        <div class="hero-blob hero-blob--b" [class.is-small]="isSmallScreen()"
+          [style.animationDelay]="'2s'" [style.animationDuration]="'12s'" [style.animationName]="'heroBlobDriftB'"
+          [style.animationPlayState]="decorativeEffectsReady() && heroSection.isNear() ? 'running' : 'paused'">
+        </div>
+        <div class="hero-blob hero-blob--c" [class.is-small]="isSmallScreen()"></div>
 
-        <div class="relative z-20 mx-auto mt-12 max-w-7xl px-6 text-center">
-          <div class="hero-reveal flex flex-col items-center">
-            <h1 class="hero-reveal hero-reveal-delay-1 mb-8 text-5xl font-extrabold leading-tight tracking-tight md:text-7xl lg:text-8xl">Data-Driven <br class="hidden md:block" /><span class="bg-gradient-to-r from-[#ff4f4f] to-[#df9dff] bg-clip-text text-transparent">Operational Intelligence</span></h1>
-
-            <p class="hero-reveal hero-reveal-delay-2 mb-12 mx-auto max-w-3xl text-lg font-light text-slate-400 md:text-2xl">Klogdata engineers the operating layer for institutions and enterprises. We unite isolated domains—academics, finance, and administration—into seamless platforms.</p>
-
-            <div class="hero-reveal hero-reveal-delay-3 flex flex-col items-center justify-center gap-6 sm:flex-row">
-              <button type="button" (click)="scrollToSection('products')" class="group relative flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-8 py-4 font-bold text-slate-900 sm:w-auto">
-                <span class="relative z-10 inline-block transition-transform duration-200 group-hover:scale-110">Explore Products</span>
-                <lucide-icon [img]="icons.ArrowRight" class="relative z-10 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1.5 group-hover:scale-110"></lucide-icon>
-              </button>
-
-              <button type="button" (click)="scrollToSection('services')" class="group relative w-full cursor-pointer overflow-hidden rounded-full border border-white/10 px-8 py-4 font-bold text-white transition-colors duration-200 hover:bg-white/10 sm:w-auto" [ngClass]="isSmallScreen() ? 'bg-white/10' : 'bg-white/5 backdrop-blur-md'">
-                <span class="relative z-10 inline-block transition-transform duration-200 group-hover:scale-110">Our Services</span>
-              </button>
+        @if (decorativeEffectsReady() && heroSection.isNear()) {
+          @for (streamIndex of heroStreamIndexes(); track streamIndex) {
+            <div class="hero-stream"
+              style="position:absolute; left:-50%; z-index:0; height:2px; width:25%; background:linear-gradient(to right, transparent, transparent)"
+              [style.background]="streamIndex % 2 === 0 ? 'linear-gradient(to right,transparent,#22d3ee,transparent)' : 'linear-gradient(to right,transparent,#6366f1,transparent)'"
+              [style.boxShadow]="streamIndex % 2 === 0 ? '0 0 15px #22d3ee' : '0 0 15px #6366f1'"
+              [style.--stream-delay]="((streamIndex * 0.7) % 5) + 's'"
+              [style.--stream-duration]="(3 + (streamIndex % 5)) + 's'"
+              [style.opacity]="0.3 + (streamIndex % 3) * 0.2"
+              [style.top.%]="5 + (streamIndex * 17) % 90">
             </div>
+          }
+        }
+
+        <div class="hero-rings-container">
+          @if (!isSmallScreen()) {
+            <div class="hero-ring-quarter"></div>
+          }
+
+          @for (ring of heroRings(); track ring) {
+            <div class="hero-ring" [class.is-small]="isSmallScreen()"
+              [style.width.%]="ring * 20" [style.height.%]="ring * 20">
+            </div>
+          }
+        </div>
+
+        @if (decorativeEffectsReady() && heroSection.isNear()) {
+          @for (particle of heroParticles(); track $index) {
+            <div class="hero-particle"
+              style="position:absolute; z-index:0; height:6px; width:6px; border-radius:9999px;"
+              [style.background]="$index % 3 !== 0 ? '#22d3ee' : '#818cf8'"
+              [style.boxShadow]="$index % 3 !== 0 ? '0 0 10px #22d3ee' : '0 0 10px #818cf8'"
+              [style.--particle-delay]="particle.delay + 's'"
+              [style.--particle-duration]="(particle.duration + 2) + 's'"
+              [style.--particle-x]="particle.x + 'px'"
+              [style.left.%]="particle.left"
+              [style.top.%]="particle.top">
+            </div>
+          }
+        }
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-content__inner hero-reveal">
+          <h1 class="hero-title hero-reveal hero-reveal-delay-1">
+            Data-Driven
+            <br class="hero-title__br" />
+            <span class="gradient-text">Operational Intelligence</span>
+          </h1>
+
+          <p class="hero-subtitle hero-reveal hero-reveal-delay-2">
+            Klogdata engineers the operating layer for institutions and enterprises. We unite isolated domains—academics, finance, and administration—into seamless platforms.
+          </p>
+
+          <div class="hero-actions hero-reveal hero-reveal-delay-3">
+            <button type="button" (click)="scrollToSection('products')" class="hero-btn-primary">
+              <span>Explore Products</span>
+              <lucide-icon [img]="icons.ArrowRight" class="h-5 w-5"></lucide-icon>
+            </button>
+
+            <button type="button" (click)="scrollToSection('services')" class="hero-btn-secondary" [class.no-blur]="isSmallScreen()">
+              <span>Our Services</span>
+            </button>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      @defer (when deferredSectionsReady()) {
-        <app-home-deferred-sections
-          [ctaImageReady]="overlayDetailsReady()"
-          [decorativeEffectsReady]="decorativeEffectsReady()"
-          [isSmallScreen]="isSmallScreen()"
-          [overlayDetailsReady]="overlayDetailsReady()"
-          (consultationRequested)="openConsultation()"
-        ></app-home-deferred-sections>
-      }
-    </div>
+    @defer (when deferredSectionsReady()) {
+      <app-home-deferred-sections
+        [ctaImageReady]="overlayDetailsReady()"
+        [decorativeEffectsReady]="decorativeEffectsReady()"
+        [isSmallScreen]="isSmallScreen()"
+        [overlayDetailsReady]="overlayDetailsReady()"
+        (consultationRequested)="openConsultation()"
+      ></app-home-deferred-sections>
+    }
   </main>
 
-  <div appSectionActivity #footerTrigger="sectionActivity" class="h-px w-full" aria-hidden="true"></div>
+  <div appSectionActivity #footerTrigger="sectionActivity" class="section-trigger" aria-hidden="true"></div>
 
   @defer (when footerTrigger.hasEntered()) {
     <app-footer></app-footer>

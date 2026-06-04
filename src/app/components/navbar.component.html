@@ -1,39 +1,39 @@
 <header
-  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-all duration-300"
-  [ngClass]="scrolled() ? 'bg-slate-950/95 border-white/10 shadow-lg md:bg-slate-950/80 md:backdrop-blur-md' : 'bg-transparent'"
+  class="navbar"
+  [ngClass]="{ 'navbar--scrolled': scrolled() }"
 >
-  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+  <div class="navbar__container">
     <button
       type="button"
       (click)="scrollToTop()"
-      class="group relative z-50 flex items-center gap-2 cursor-pointer"
+      class="navbar__logo"
     >
-      <div class="flex h-10 w-10 items-center justify-center transition-transform duration-500 group-hover:scale-110">
-        <img [src]="logoSrc" alt="Klogdata Logo" class="h-full w-full object-contain" />
+      <div class="navbar__logo-icon">
+        <img [src]="logoSrc" alt="Klogdata Logo" />
       </div>
       <span class="brand-wordmark text-xl font-bold" style="font-family: 'Outfit', sans-serif">Klog<span class="brand-wordmark-accent">data</span>.</span>
     </button>
 
-    <nav class="hidden md:flex items-center gap-8">
+    <nav class="navbar__desktop-nav">
       @for (link of navLinks; track link.name) {
         <button
           type="button"
           (click)="handleNavClick(link.href)"
-          class="group relative cursor-pointer text-sm font-medium text-slate-300 transition-all duration-200 hover:-translate-y-0.5 hover:text-cyan-400 active:scale-95"
+          class="navbar__nav-link"
         >
           {{ link.name }}
-          <div class="absolute bottom-0 left-0 right-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan-400 to-indigo-500 transition-transform duration-300 group-hover:scale-x-100"></div>
+          <div class="navbar__nav-link-underline"></div>
         </button>
       }
 
-      <button type="button" (click)="openConsultation()" [class]="consultationButtonClassName + ' cursor-pointer'">
+      <button type="button" (click)="openConsultation()" class="navbar__cta-btn">
         Schedule a Consultation
       </button>
     </nav>
 
     <button
       type="button"
-      class="relative z-50 p-2 text-slate-300 hover:text-white cursor-pointer md:hidden"
+      class="navbar__mobile-toggle"
       (click)="toggleMobileMenu()"
     >
       <lucide-icon [img]="mobileMenuOpen() ? icons.X : icons.Menu" class="h-6 w-6"></lucide-icon>
@@ -42,19 +42,15 @@
 
   @if (mobileMenuMounted()) {
     <div
-      class="absolute left-0 right-0 top-0 border-b border-white/10 bg-slate-900 px-6 pb-6 pt-20 shadow-2xl transition-all duration-200 md:hidden"
-      [ngClass]="
-        mobileMenuOpen()
-          ? 'pointer-events-auto translate-y-0 opacity-100'
-          : 'pointer-events-none -translate-y-5 opacity-0'
-      "
+      class="navbar__mobile-menu"
+      [ngClass]="mobileMenuOpen() ? 'navbar__mobile-menu--open' : 'navbar__mobile-menu--closed'"
     >
-      <div class="flex flex-col gap-4">
+      <div class="navbar__mobile-links">
         @for (link of navLinks; track link.name) {
           <button
             type="button"
             (click)="handleNavClick(link.href)"
-            class="cursor-pointer border-b border-white/5 py-2 text-left text-lg font-medium text-slate-300 hover:text-cyan-400"
+            class="navbar__mobile-link"
           >
             {{ link.name }}
           </button>
@@ -63,7 +59,7 @@
         <button
           type="button"
           (click)="handleMobileConsultation()"
-          [class]="consultationButtonClassName + ' mt-4 w-full cursor-pointer py-3 text-base'"
+          class="navbar__cta-btn navbar__mobile-cta"
         >
           Schedule a Consultation
         </button>

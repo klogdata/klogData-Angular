@@ -1,172 +1,169 @@
-﻿<div class="fixed inset-0 z-50">
-  <div class="fixed inset-0" style="background-color: rgba(255, 255, 255, 0.62);" (click)="close()"></div>
+<div class="dialog-backdrop dialog-enter">
+  <div class="dialog-overlay" style="background-color: rgba(255,255,255,0.62);" (click)="close()"></div>
 
   <div
-    class="fixed left-1/2 top-1/2 z-50 max-h-[88vh] w-[calc(100%-1rem)] max-w-[760px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[1.75rem] border border-cyan-500/10 bg-[linear-gradient(180deg,rgba(8,15,29,0.98),rgba(7,13,24,0.98))] shadow-[0_32px_120px_rgba(2,6,23,0.78)] outline-none sm:w-[calc(100%-2rem)]"
+    class="dialog-box"
     (click)="$event.stopPropagation()"
     role="dialog"
     aria-modal="true"
     aria-labelledby="consultation-dialog-title"
     aria-describedby="consultation-dialog-description"
   >
-    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(34,211,238,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(34,211,238,0.07)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] opacity-20"></div>
-    <div class="pointer-events-none absolute -left-24 top-12 h-56 w-56 rounded-full bg-cyan-500/12 blur-[110px]"></div>
-    <div class="pointer-events-none absolute -right-16 top-0 h-64 w-64 rounded-full bg-indigo-500/12 blur-[120px]"></div>
-    <div class="pointer-events-none absolute bottom-0 left-1/3 h-40 w-40 rounded-full bg-fuchsia-500/8 blur-[90px]"></div>
+    <div class="dialog-bg-grid"></div>
+    <div class="dialog-blob dialog-blob--tl"></div>
+    <div class="dialog-blob dialog-blob--tr"></div>
+    <div class="dialog-blob dialog-blob--bc"></div>
 
-    <div class="relative max-h-[88vh] overflow-y-auto overscroll-contain">
-      <div class="relative">
-        <div class="rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(15,23,42,0.88),rgba(7,13,24,0.94))] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-8">
-          <div class="mb-4 max-w-[560px] pr-10">
-            <h2 id="consultation-dialog-title" class="text-[1.65rem] font-semibold leading-[0.96] tracking-[-0.04em] text-white sm:text-[2rem] md:text-[2.2rem]">
-              Tell us what you need.
-            </h2>
-            <p id="consultation-dialog-description" class="mt-2 text-sm leading-6 text-slate-400 sm:text-[0.95rem]">
-              Share your requirement and one reliable way to reach you. We will follow up with the right next step.
-            </p>
+    <div class="dialog-scroll">
+      <div class="dialog-inner">
+        <div class="dialog-header">
+          <h2 id="consultation-dialog-title" class="dialog-title">Tell us what you need.</h2>
+          <p id="consultation-dialog-description" class="dialog-subtitle">
+            Share your requirement and one reliable way to reach you. We will follow up with the right next step.
+          </p>
+        </div>
+
+        <form class="dialog-form" (submit)="submitForm($event)" novalidate>
+          <div class="dialog-form-grid">
+            <div class="dialog-field">
+              <label for="consultation-name" class="dialog-label">Name</label>
+              <input
+                #nameInput
+                id="consultation-name"
+                type="text"
+                name="name"
+                [value]="name"
+                (input)="handleNameChange(nameInput.value)"
+                placeholder="Your name"
+                [disabled]="isSubmitting"
+                [attr.aria-invalid]="nameError ? 'true' : null"
+                class="dialog-input"
+              />
+              @if (nameError) {
+                <p class="dialog-error">{{ nameError }}</p>
+              }
+            </div>
+
+            <div class="dialog-field">
+              <label for="consultation-service" class="dialog-label">Service Needed</label>
+              <div class="dialog-field-relative" data-service-field>
+                <button
+                  id="consultation-service"
+                  type="button"
+                  (click)="toggleServiceMenu()"
+                  [disabled]="isSubmitting"
+                  [attr.aria-invalid]="serviceError ? 'true' : null"
+                  [attr.aria-expanded]="serviceMenuOpen"
+                  aria-haspopup="listbox"
+                  class="dialog-select-btn"
+                  [class.placeholder]="!serviceNeeded"
+                >
+                  <span>{{ getSelectedServiceLabel() }}</span>
+                  <lucide-icon [img]="icons.ChevronDown" class="h-4 w-4" style="color:#94a3b8"></lucide-icon>
+                </button>
+
+                @if (serviceMenuOpen) {
+                  <div class="dialog-select-dropdown" role="listbox" aria-label="Service Needed">
+                    @for (option of serviceOptions; track option.value) {
+                      <button
+                        type="button"
+                        (click)="selectService(option.value)"
+                        class="dialog-select-option"
+                        [class.selected]="serviceNeeded === option.value"
+                      >
+                        {{ option.label }}
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+              @if (serviceError) {
+                <p class="dialog-error">{{ serviceError }}</p>
+              }
+            </div>
+
+            <div class="dialog-field">
+              <label for="consultation-email" class="dialog-label">Email</label>
+              <input
+                #emailInput
+                id="consultation-email"
+                type="email"
+                name="email"
+                [value]="email"
+                (input)="handleEmailChange(emailInput.value)"
+                autocomplete="email"
+                placeholder="you@company.com"
+                [disabled]="isSubmitting"
+                [attr.aria-invalid]="emailError || contactError ? 'true' : null"
+                [attr.aria-describedby]="emailError ? 'consultation-email-error' : null"
+                class="dialog-input"
+              />
+              @if (emailError) {
+                <p id="consultation-email-error" class="dialog-error">{{ emailError }}</p>
+              }
+            </div>
+
+            <div class="dialog-field">
+              <label for="consultation-phone" class="dialog-label">Phone or WhatsApp</label>
+              <input
+                #phoneInput
+                id="consultation-phone"
+                type="tel"
+                name="phone"
+                [value]="phone"
+                (input)="handlePhoneChange(phoneInput.value)"
+                autocomplete="tel"
+                inputmode="tel"
+                placeholder="Phone or WhatsApp number"
+                [disabled]="isSubmitting"
+                [attr.aria-invalid]="phoneError || contactError ? 'true' : null"
+                [attr.aria-describedby]="phoneError ? 'consultation-phone-error' : null"
+                class="dialog-input"
+              />
+              @if (phoneError) {
+                <p id="consultation-phone-error" class="dialog-error">{{ phoneError }}</p>
+              }
+            </div>
           </div>
 
-          <form class="space-y-4" (submit)="submitForm($event)" novalidate>
-            <div class="grid gap-3 md:grid-cols-2">
-              <div class="space-y-2.5">
-                <label for="consultation-name" class="block text-[0.7rem] font-bold uppercase tracking-[0.18em] text-slate-300">Name</label>
-                <input
-                  id="consultation-name"
-                  type="text"
-                  name="name"
-                  [ngModel]="name"
-                  (ngModelChange)="handleNameChange($event)"
-                  placeholder="Your name"
-                  [disabled]="isSubmitting"
-                  [attr.aria-invalid]="nameError ? 'true' : null"
-                  class="h-11 w-full rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-0 text-[0.95rem] text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/45 focus:bg-white/[0.06] focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
-                />
-                @if (nameError) {
-                  <p class="text-sm font-medium text-red-400">{{ nameError }}</p>
-                }
-              </div>
+          @if (contactError) {
+            <p class="dialog-error" style="margin-top:-0.25rem">{{ contactError }}</p>
+          }
 
-              <div class="space-y-2.5">
-                <label for="consultation-service" class="block text-[0.7rem] font-bold uppercase tracking-[0.18em] text-slate-300">Service Needed</label>
-                <div class="relative" data-service-field>
-                  <button
-                    id="consultation-service"
-                    type="button"
-                    (click)="toggleServiceMenu()"
-                    [disabled]="isSubmitting"
-                    [attr.aria-invalid]="serviceError ? 'true' : null"
-                    [attr.aria-expanded]="serviceMenuOpen"
-                    aria-haspopup="listbox"
-                    class="flex h-11 w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 text-left text-[0.95rem] text-slate-100 focus:border-cyan-400/45 focus:bg-white/[0.06] focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
-                    [ngClass]="{ 'text-slate-500': !serviceNeeded }"
-                  >
-                    <span>{{ getSelectedServiceLabel() }}</span>
-                    <lucide-icon [img]="icons.ChevronDown" class="h-4 w-4 text-slate-400"></lucide-icon>
-                  </button>
+          <div class="dialog-field">
+            <label for="consultation-brief" class="dialog-label">Project Brief</label>
+            <textarea
+              #briefInput
+              id="consultation-brief"
+              name="message"
+              [value]="brief"
+              (input)="handleBriefChange(briefInput.value)"
+              [disabled]="isSubmitting"
+              placeholder="Briefly outline your requirement, business context, and the outcome you want to achieve."
+              class="dialog-textarea"
+            ></textarea>
+          </div>
 
-                  @if (serviceMenuOpen) {
-                    <div
-                      class="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-30 rounded-2xl border border-white/10 bg-[#111c32] p-1 text-slate-100 shadow-[0_24px_60px_rgba(2,6,23,0.48)]"
-                      role="listbox"
-                      aria-label="Service Needed"
-                    >
-                      @for (option of serviceOptions; track option.value) {
-                        <button
-                          type="button"
-                          (click)="selectService(option.value)"
-                          class="flex w-full items-center rounded-[0.9rem] px-3 py-2.5 text-left text-sm transition-colors hover:bg-white/8"
-                          [ngClass]="serviceNeeded === option.value ? 'bg-white/10 text-white' : 'text-slate-100'"
-                        >
-                          {{ option.label }}
-                        </button>
-                      }
-                    </div>
-                  }
-                </div>
-                @if (serviceError) {
-                  <p class="text-sm font-medium text-red-400">{{ serviceError }}</p>
-                }
-              </div>
+          @if (submitError) {
+            <p class="dialog-error">{{ submitError }}</p>
+          }
 
-              <div class="space-y-2.5">
-                <label for="consultation-email" class="block text-[0.7rem] font-bold uppercase tracking-[0.18em] text-slate-300">Email</label>
-                <input
-                  id="consultation-email"
-                  type="email"
-                  name="email"
-                  [ngModel]="email"
-                  (ngModelChange)="handleEmailChange($event)"
-                  autocomplete="email"
-                  placeholder="you@company.com"
-                  [disabled]="isSubmitting"
-                  [attr.aria-invalid]="emailError || contactError ? 'true' : null"
-                  [attr.aria-describedby]="emailError ? 'consultation-email-error' : null"
-                  class="h-11 w-full rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-0 text-[0.95rem] text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/45 focus:bg-white/[0.06] focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
-                />
-                @if (emailError) {
-                  <p id="consultation-email-error" class="text-sm font-medium text-red-400">{{ emailError }}</p>
-                }
-              </div>
-
-              <div class="space-y-2.5">
-                <label for="consultation-phone" class="block text-[0.7rem] font-bold uppercase tracking-[0.18em] text-slate-300">Phone or WhatsApp</label>
-                <input
-                  id="consultation-phone"
-                  type="tel"
-                  name="phone"
-                  [ngModel]="phone"
-                  (ngModelChange)="handlePhoneChange($event)"
-                  autocomplete="tel"
-                  inputmode="tel"
-                  placeholder="Phone or WhatsApp number"
-                  [disabled]="isSubmitting"
-                  [attr.aria-invalid]="phoneError || contactError ? 'true' : null"
-                  [attr.aria-describedby]="phoneError ? 'consultation-phone-error' : null"
-                  class="h-11 w-full rounded-[1rem] border border-white/10 bg-white/[0.04] px-4 py-0 text-[0.95rem] text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/45 focus:bg-white/[0.06] focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
-                />
-                @if (phoneError) {
-                  <p id="consultation-phone-error" class="text-sm font-medium text-red-400">{{ phoneError }}</p>
-                }
-              </div>
-            </div>
-
-            @if (contactError) {
-              <p class="-mt-1 text-sm font-medium text-red-400">{{ contactError }}</p>
-            }
-
-            <div class="space-y-2">
-              <label for="consultation-brief" class="block text-[0.7rem] font-bold uppercase tracking-[0.18em] text-slate-300">Project Brief</label>
-              <textarea
-                id="consultation-brief"
-                name="message"
-                [ngModel]="brief"
-                (ngModelChange)="handleBriefChange($event)"
-                [disabled]="isSubmitting"
-                placeholder="Briefly outline your requirement, business context, and the outcome you want to achieve."
-                class="min-h-[5.1rem] w-full rounded-[1.05rem] border border-white/10 bg-white/[0.04] px-4 py-2.5 text-[0.95rem] leading-6 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/45 focus:bg-white/[0.06] focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
-              ></textarea>
-            </div>
-
-            @if (submitError) {
-              <p class="text-sm font-medium text-red-400">{{ submitError }}</p>
-            }
-
-            <div class="flex justify-end pt-1 gap-4">
-              <button
-                type="button"
-                (click)="close()"
-                class="inline-flex min-w-[154px] items-center justify-center rounded-full border border-cyan-400/30 bg-close px-4 py-2.5 text-[0.9rem] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_10px_24px_rgba(8,47,73,0.3)] transition-all duration-300 hover:border-cyan-300/50 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_14px_30px_rgba(8,47,73,0.38)] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer"
-              >Close</button>
-              <button
-                type="submit"
-                [disabled]="isSubmitting"
-                class="inline-flex min-w-[154px] items-center justify-center rounded-full border border-cyan-400/30 bg-[linear-gradient(135deg,rgba(34,211,238,0.18),rgba(99,102,241,0.2)_55%,rgba(244,63,94,0.14))] px-4 py-2.5 text-[0.9rem] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_10px_24px_rgba(8,47,73,0.3)] transition-all duration-300 hover:border-cyan-300/50 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_14px_30px_rgba(8,47,73,0.38)] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer"
-              >
-                {{ isSubmitting ? 'Sending...' : 'Send Enquiry' }}
-              </button>
-            </div>
-          </form>
-        </div>
+          <div class="dialog-actions">
+            <button
+              #closeButton
+              type="button"
+              (click)="close()"
+              class="dialog-btn dialog-btn--close"
+            >Close</button>
+            <button
+              type="submit"
+              [disabled]="isSubmitting"
+              class="dialog-btn dialog-btn--submit"
+            >
+              {{ isSubmitting ? 'Sending...' : 'Send Enquiry' }}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
