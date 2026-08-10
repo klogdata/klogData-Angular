@@ -294,7 +294,7 @@ float fbm(vec2 p){
 vec3 iridescent(float t){
   // Tight indigo family — similar luminance so no single stop pops
   vec3 slateTeal = vec3(0.059, 0.392, 0.431); //vec3(0.008, 0.024, 0.090); // #4D6B94
-  vec3 indigo = vec3(0.008, 0.024, 0.090);    // #575C9E
+  vec3 indigo = vec3(0.122, 0.275, 0.341);    // #575C9E
   vec3 violet = vec3(0.043, 0.247, 0.388);    // #7561A3
   vec3 rose = vec3(0.051, 0.216, 0.341);      // #85577A
   float x = fract(t);
