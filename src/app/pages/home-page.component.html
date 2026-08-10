@@ -4,72 +4,21 @@
   <main class="page-main">
     <app-scroll-progress></app-scroll-progress>
 
+    <!-- Spans hero + top of next section so the join can dissolve instead of hard-cut -->
+    <div class="hero-atmosphere" aria-hidden="true">
+      <app-iridescent-hero-bg [active]="decorativeEffectsReady() && heroSection.isNear()" />
+    </div>
+
     <section appSectionActivity #heroSection="sectionActivity" class="hero-section">
-      <div class="hero-bg">
-        <div class="hero-bg__gradient"></div>
-
-        <div class="hero-blob hero-blob--a" [class.is-small]="isSmallScreen()"
-          [style.animationDuration]="'15s'" [style.animationName]="'heroBlobDriftA'"
-          [style.animationPlayState]="decorativeEffectsReady() && heroSection.isNear() ? 'running' : 'paused'">
-        </div>
-        <div class="hero-blob hero-blob--b" [class.is-small]="isSmallScreen()"
-          [style.animationDelay]="'2s'" [style.animationDuration]="'12s'" [style.animationName]="'heroBlobDriftB'"
-          [style.animationPlayState]="decorativeEffectsReady() && heroSection.isNear() ? 'running' : 'paused'">
-        </div>
-        <div class="hero-blob hero-blob--c" [class.is-small]="isSmallScreen()"></div>
-
-        @if (decorativeEffectsReady() && heroSection.isNear()) {
-          @for (streamIndex of heroStreamIndexes(); track streamIndex) {
-            <div class="hero-stream"
-              style="position:absolute; left:-50%; z-index:0; height:2px; width:25%; background:linear-gradient(to right, transparent, transparent)"
-              [style.background]="streamIndex % 2 === 0 ? 'linear-gradient(to right,transparent,#22d3ee,transparent)' : 'linear-gradient(to right,transparent,#6366f1,transparent)'"
-              [style.boxShadow]="streamIndex % 2 === 0 ? '0 0 15px #22d3ee' : '0 0 15px #6366f1'"
-              [style.--stream-delay]="((streamIndex * 0.7) % 5) + 's'"
-              [style.--stream-duration]="(3 + (streamIndex % 5)) + 's'"
-              [style.opacity]="0.3 + (streamIndex % 3) * 0.2"
-              [style.top.%]="5 + (streamIndex * 17) % 90">
-            </div>
-          }
-        }
-
-        <div class="hero-rings-container">
-          @if (!isSmallScreen()) {
-            <div class="hero-ring-quarter"></div>
-          }
-
-          @for (ring of heroRings(); track ring) {
-            <div class="hero-ring" [class.is-small]="isSmallScreen()"
-              [style.width.%]="ring * 20" [style.height.%]="ring * 20">
-            </div>
-          }
-        </div>
-
-        @if (decorativeEffectsReady() && heroSection.isNear()) {
-          @for (particle of heroParticles(); track $index) {
-            <div class="hero-particle"
-              style="position:absolute; z-index:0; height:6px; width:6px; border-radius:9999px;"
-              [style.background]="$index % 3 !== 0 ? '#22d3ee' : '#818cf8'"
-              [style.boxShadow]="$index % 3 !== 0 ? '0 0 10px #22d3ee' : '0 0 10px #818cf8'"
-              [style.--particle-delay]="particle.delay + 's'"
-              [style.--particle-duration]="(particle.duration + 2) + 's'"
-              [style.--particle-x]="particle.x + 'px'"
-              [style.left.%]="particle.left"
-              [style.top.%]="particle.top">
-            </div>
-          }
-        }
-      </div>
-
       <div class="hero-content">
         <div class="hero-content__inner hero-reveal">
           <h1 class="hero-title hero-reveal hero-reveal-delay-1">
-            Data-Driven
-            <br class="hero-title__br" />
+            <span class="hero-title__lead">Data-Driven</span>
             <span class="gradient-text">Operational Intelligence</span>
           </h1>
 
           <p class="hero-subtitle hero-reveal hero-reveal-delay-2">
-            Klogdata engineers the operating layer for institutions and enterprises. We unite isolated domains—academics, finance, and administration—into seamless platforms.
+            Klogdata engineers the operating layer for institutions and enterprises.
           </p>
 
           <div class="hero-actions hero-reveal hero-reveal-delay-3">

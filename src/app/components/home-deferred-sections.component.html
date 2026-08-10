@@ -1,14 +1,13 @@
 <section appSectionActivity #productsSection="sectionActivity" id="products" class="products-section deferred-section-shell">
-  <div style="position:absolute;inset:0;z-index:0">
+  <div class="products-section__atmosphere" aria-hidden="true">
     @if (overlayDetailsReady()) {
-      <div class="fade-in" style="position:absolute;inset:0;background-image:url('/assets/grid-overlay-cyan.svg');background-position:center"></div>
+      <div class="products-section__grid fade-in"></div>
     }
   </div>
 
   <div class="products-section__inner">
     <div class="section-header">
       <h2 appRevealItem="blur-in" class="section-title">Our Core <br /><span class="gradient-text-hero">Platforms</span></h2>
-      <p appRevealItem="slide-up" [revealDelay]="150" class="section-subtitle">Purpose-built automation engines designed to establish control and clarity across your organization.</p>
     </div>
 
     <div class="products-grid">

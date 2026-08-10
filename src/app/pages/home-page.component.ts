@@ -13,6 +13,7 @@ import type { ConsultationDialogComponent } from '../components/consultation-dia
 import { ArrowRight, LucideAngularModule } from 'lucide-angular';
 import { FooterComponent } from '../components/footer.component';
 import { HomeDeferredSectionsComponent } from '../components/home-deferred-sections.component';
+import { IridescentHeroBgComponent } from '../components/iridescent-hero-bg.component';
 import { NavbarComponent } from '../components/navbar.component';
 import { ScrollProgressComponent } from '../components/scroll-progress.component';
 import { ToastHostComponent } from '../components/toast-host.component';
@@ -22,38 +23,7 @@ import { SectionActivityDirective } from '../shared/section-activity.directive';
 
 const ICONS = { ArrowRight };
 
-type ParticleSpec = {
-  delay: number;
-  duration: number;
-  left: number;
-  scale: number;
-  top: number;
-  x: number;
-};
-
 const MOBILE_BREAKPOINT = 768;
-
-const createParticleSpecs = (
-  count: number,
-  maxOffset = 60,
-  maxScale = 1.8,
-  position = { leftStart: 0, leftSpan: 100, topStart: 0, topSpan: 100 },
-): ParticleSpec[] =>
-  Array.from({ length: count }, () => ({
-    delay: Math.random() * 3,
-    duration: 3 + Math.random() * 4,
-    left: position.leftStart + Math.random() * position.leftSpan,
-    scale: 1 + Math.random() * (maxScale - 1),
-    top: position.topStart + Math.random() * position.topSpan,
-    x: Math.random() < 0.5 ? maxOffset : -maxOffset,
-  }));
-
-const HERO_PARTICLES = createParticleSpecs(12, 60, 1.8, {
-  leftStart: 24,
-  leftSpan: 52,
-  topStart: 26,
-  topSpan: 34,
-});
 
 @Component({
   selector: 'app-home-page',
@@ -63,6 +33,7 @@ const HERO_PARTICLES = createParticleSpecs(12, 60, 1.8, {
     NavbarComponent,
     ScrollProgressComponent,
     SectionActivityDirective,
+    IridescentHeroBgComponent,
     HomeDeferredSectionsComponent,
     FooterComponent,
     ToastHostComponent,
@@ -78,9 +49,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   protected readonly deferredSectionsReady = signal(false);
   protected readonly isMobile = signal(typeof window !== 'undefined' ? window.innerWidth < MOBILE_BREAKPOINT : false);
   protected readonly isSmallScreen = computed(() => this.isMobile());
-  protected readonly heroParticles = computed(() => (this.isSmallScreen() ? HERO_PARTICLES.slice(0, 6) : HERO_PARTICLES));
-  protected readonly heroStreamIndexes = computed(() => Array.from({ length: this.isSmallScreen() ? 2 : 4 }, (_, index) => index));
-  protected readonly heroRings = computed(() => (this.isSmallScreen() ? [1] : [1, 2]));
 
   private overlayCleanup: () => void = () => {};
   private deferredCleanup: () => void = () => {};
