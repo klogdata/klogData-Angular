@@ -537,14 +537,14 @@ app-navbar {
   // Avoid overflow clipping here — it breaks position:sticky on the navbar
 }
 
-// Hero field bleeds under the products section so the join can dissolve
+// Hero field stops at the first viewport — hard cut into the next section
 .hero-atmosphere {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   z-index: 0;
-  height: calc(100svh + clamp(10rem, 32vh, 20rem));
+  height: 100svh;
   pointer-events: none;
   overflow: hidden;
 }
@@ -606,7 +606,7 @@ app-navbar {
   .hero-title__lead {
     display: block;
     font-size: 0.5em;
-    line-height: 1.2;
+    line-height: 2.2;
     letter-spacing: -0.01em;
   }
 
@@ -705,27 +705,9 @@ app-navbar {
   position: relative;
   z-index: 1;
   overflow: hidden;
-  // Transparent top lets the hero atmosphere show through, then solidifies
-  background: transparent;
+  background: $slate-950;
   padding-block: 5rem 8rem;
   scroll-margin-top: 5rem;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      to bottom,
-      rgba($slate-950, 0) 0%,
-      rgba($slate-950, 0.25) 10%,
-      rgba($slate-950, 0.55) 22%,
-      rgba($slate-950, 0.85) 36%,
-      $slate-950 48%,
-      $slate-950 100%
-    );
-  }
 }
 
 .products-section__atmosphere {
@@ -740,21 +722,6 @@ app-navbar {
   inset: 0;
   background-image: url('/assets/grid-overlay-cyan.svg');
   background-position: center;
-  // Grid arrives with the solid fill — not as a hard sheet at the seam
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.35) 18%,
-    #000 40%,
-    #000 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.35) 18%,
-    #000 40%,
-    #000 100%
-  );
 }
 
 .products-section__inner {

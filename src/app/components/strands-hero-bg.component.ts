@@ -261,24 +261,6 @@ function buildPalette(colors: string[]): number[][] {
         inset: 0;
         overflow: hidden;
         background: transparent;
-        -webkit-mask-image: linear-gradient(
-          to bottom,
-          #000 0%,
-          #000 58%,
-          rgba(0, 0, 0, 0.75) 72%,
-          rgba(0, 0, 0, 0.35) 84%,
-          rgba(0, 0, 0, 0.1) 93%,
-          transparent 100%
-        );
-        mask-image: linear-gradient(
-          to bottom,
-          #000 0%,
-          #000 58%,
-          rgba(0, 0, 0, 0.75) 72%,
-          rgba(0, 0, 0, 0.35) 84%,
-          rgba(0, 0, 0, 0.1) 93%,
-          transparent 100%
-        );
       }
 
       .strands-hero-bg__stage {
