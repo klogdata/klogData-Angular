@@ -1,39 +1,29 @@
 <div class="page-root">
-  <app-navbar (consultationRequested)="openConsultation()"></app-navbar>
-
   <main class="page-main">
     <app-scroll-progress></app-scroll-progress>
 
     <!-- Spans hero + top of next section so the join can dissolve instead of hard-cut -->
     <div class="hero-atmosphere" aria-hidden="true">
-      <app-iridescent-hero-bg [active]="decorativeEffectsReady() && heroSection.isNear()" />
+      <app-strands-hero-bg [active]="decorativeEffectsReady() && heroSection.isNear()" />
     </div>
 
     <section appSectionActivity #heroSection="sectionActivity" class="hero-section">
       <div class="hero-content">
         <div class="hero-content__inner hero-reveal">
           <h1 class="hero-title hero-reveal hero-reveal-delay-1">
-            <span class="hero-title__lead">Data-Driven</span>
+            <span class="hero-title__lead">Data - Driven</span>
             <span class="gradient-text">Operational Intelligence</span>
           </h1>
 
           <p class="hero-subtitle hero-reveal hero-reveal-delay-2">
             Klogdata engineers the operating layer for institutions and enterprises.
           </p>
-
-          <div class="hero-actions hero-reveal hero-reveal-delay-3">
-            <button type="button" (click)="scrollToSection('products')" class="hero-btn-primary">
-              <span>Explore Products</span>
-              <lucide-icon [img]="icons.ArrowRight" class="h-5 w-5"></lucide-icon>
-            </button>
-
-            <button type="button" (click)="scrollToSection('services')" class="hero-btn-secondary" [class.no-blur]="isSmallScreen()">
-              <span>Our Services</span>
-            </button>
-          </div>
         </div>
       </div>
     </section>
+
+    <!-- Sits at the bottom of the first viewport; sticks to top once scrolled there -->
+    <app-navbar (consultationRequested)="openConsultation()"></app-navbar>
 
     @defer (when deferredSectionsReady()) {
       <app-home-deferred-sections
@@ -44,13 +34,13 @@
         (consultationRequested)="openConsultation()"
       ></app-home-deferred-sections>
     }
+
+    <div appSectionActivity #footerTrigger="sectionActivity" class="section-trigger" aria-hidden="true"></div>
+
+    @defer (when footerTrigger.hasEntered()) {
+      <app-footer></app-footer>
+    }
   </main>
-
-  <div appSectionActivity #footerTrigger="sectionActivity" class="section-trigger" aria-hidden="true"></div>
-
-  @defer (when footerTrigger.hasEntered()) {
-    <app-footer></app-footer>
-  }
 
   <ng-template #consultationOutlet></ng-template>
 

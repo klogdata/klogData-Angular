@@ -13,7 +13,7 @@ import type { ConsultationDialogComponent } from '../components/consultation-dia
 import { ArrowRight, LucideAngularModule } from 'lucide-angular';
 import { FooterComponent } from '../components/footer.component';
 import { HomeDeferredSectionsComponent } from '../components/home-deferred-sections.component';
-import { IridescentHeroBgComponent } from '../components/iridescent-hero-bg.component';
+import { StrandsHeroBgComponent } from '../components/strands-hero-bg.component';
 import { NavbarComponent } from '../components/navbar.component';
 import { ScrollProgressComponent } from '../components/scroll-progress.component';
 import { ToastHostComponent } from '../components/toast-host.component';
@@ -33,7 +33,7 @@ const MOBILE_BREAKPOINT = 768;
     NavbarComponent,
     ScrollProgressComponent,
     SectionActivityDirective,
-    IridescentHeroBgComponent,
+    StrandsHeroBgComponent,
     HomeDeferredSectionsComponent,
     FooterComponent,
     ToastHostComponent,

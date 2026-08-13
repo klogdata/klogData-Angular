@@ -1,12 +1,20 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  inject,
+  output,
+  signal,
+} from '@angular/core';
 import { LucideAngularModule, Menu, X } from 'lucide-angular';
 import { scrollToSection, scrollToTop } from '../shared/navigation';
 
 const ICONS = { Menu, X };
 
 const NAV_LINKS = [
-  { name: 'Home', href: '/' },
   { name: 'Products', href: '#products' },
   { name: 'Services', href: '#services' },
 ];
@@ -19,6 +27,8 @@ const NAV_LINKS = [
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  private readonly host = inject(ElementRef<HTMLElement>);
+
   readonly consultationRequested = output<void>();
   protected readonly icons = ICONS;
   protected readonly navLinks = NAV_LINKS;
@@ -33,12 +43,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const handleScroll = () => {
-      this.scrolled.set(window.scrollY > 50);
+      // Solid bar once the sticky navbar has reached (or passed) the viewport top
+      this.scrolled.set(this.host.nativeElement.getBoundingClientRect().top <= 1);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
-    this.removeScrollListener = () => window.removeEventListener('scroll', handleScroll);
+    this.removeScrollListener = () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }
 
   ngOnDestroy() {
